@@ -64,6 +64,88 @@
       }
     }
 
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: rgba(24, 39, 66, 0.95);
+      padding: 30px 35px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 90vw;
+      color: #e6f1ff;
+      box-sizing: border-box;
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+      color: #00ffc3;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .modal-content label {
+      font-weight: 600;
+      color: #b0bec5;
+      margin-top: 16px;
+      display: block;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e6f1ff;
+    }
+
+    .modal-content button {
+      margin-top: 20px;
+      background: #00c2a0;
+      border: none;
+      padding: 14px 0;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+      background: #009d82;
+    }
+
+    .login-alert {
+      background: #ffd2d2;
+      color: #a94442;
+      padding: 12px 15px;
+      font-weight: 600;
+      border-radius: 8px;
+      margin: 14px 0 0;
+      text-align: center;
+      font-size: 1rem;
+      box-sizing: border-box;
+      display: none;
+      user-select: none;
+    }
+
     /* NAVBAR */
     .navbar {
       position: sticky;
@@ -295,6 +377,28 @@
 
 <body>
   <!-- NAVBAR -->
+  <!-- Login modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h2>Login Required</h2>
+      <div class="login-alert" id="loginAlert" style="display:none;">Login failed. Please try again.</div>
+      <form id="loginForm" novalidate>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@example.com" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required />
+
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Your dashboard content below -->
+  <div id="dashboardContent" style="display:none;">
+    <!-- Your existing dashboard markup -->
+  </div>
+
   <div class="navbar">
     <div class="header">
       <div class="logo">
@@ -304,9 +408,9 @@
     <div class="nav-links">
       <a href="#">Home</a>
       <a href="weather.html">Weather</a>
-      <a href="#">Analytics</a>
-      <a href="#">Settings</a>
-      <a href="signup.html">Sign up</a>
+      <a href="#">Leaf analyzer AI</a>
+      <!-- <a href="#">Settings</a>
+      <a href="signup.html">Sign up</a> -->
     </div>
     <div class="hamburger" onclick="toggleMenu(this)">
       <span></span>
@@ -319,9 +423,9 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#">Home</a>
     <a href="weather.html">Weather</a>
-    <a href="#">Analytics</a>
-    <a href="#">Settings</a>
-    <a href="signup.html">Sign up</a>
+    <a href="">Leaf analyzer AI</a>
+    <!-- <a href="#">Settings</a>
+    <a href="signup.html">Sign up</a> -->
   </div>
 
   <div class="container">
@@ -374,6 +478,26 @@
 
   <!-- Falling Leaves + Menu -->
   <script>
+
+    const loginModal = document.getElementById('loginModal');
+    const loginForm = document.getElementById('loginForm');
+    const loginAlert = document.getElementById('loginAlert');
+    const dashboardContent = document.getElementById('dashboardContent');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = loginForm.email.value.trim();
+      const password = loginForm.password.value;
+
+      if (email === 'srinjoyt06@gmail.com' && password === '00112233') {
+        loginAlert.style.display = 'none';
+        loginModal.style.display = 'none';
+        dashboardContent.style.display = 'block';
+      } else {
+        loginAlert.style.display = 'block';
+      }
+    });
+
     function createLeaf() {
       const el = document.createElement('i');
       el.className = 'fa-solid fa-leaf leaf';
